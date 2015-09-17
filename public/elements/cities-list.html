@@ -1,0 +1,57 @@
+<link rel="import"
+      href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<link rel="stylesheet" type="text/css" href="list.css" />
+<dom-module id="cities-list">
+    <template>
+        <iron-ajax  url="http://192.168.0.100:3000/users"
+                    last-response="{{data}}"
+                    auto on-response="handleResponse"></iron-ajax>
+        <iron-list class="list" items="[[data]]" as="item">
+            <template>
+                <paper-item >
+
+                    <paper-item-body class="flex" on-click="specialTap" id="{{index}}" two-line>
+                        <div><span>[[item.city]]</span></div>
+                        <div secondary>population: <span>[[item.population]]</span></div>
+                    </paper-item-body>
+                    <paper-icon-button icon="delete" on-click = ""></paper-icon-button>
+                </paper-item>
+
+
+            </template>
+        </iron-list>
+    </template>
+    <script>
+        Polymer({
+            is: 'cities-list',
+//            properties: {
+//                data: Array
+//            },
+//            listeners: {
+//                'tap': 'regularTap',
+//                'special.tap': 'specialTap'
+//            },
+            handleResponse:function(res){
+                this.fire('onDataResponse', {data: this.data});
+            },
+            regularTap: function(e) {
+                alert("Thank you for tapping");
+            },
+
+            specialTap: function(e,b,c) {
+                console.log(e.target.id); // selected iron-list row index
+                console.log ("Selected index is " + e.model.index);
+                this.fire('onItemClickListener', {itemId: e.model.index});
+
+            },
+            deleteCity:function(e){
+
+            }
+        });
+    </script>
+</dom-module>
