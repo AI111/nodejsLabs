@@ -31,7 +31,13 @@ Left Nav + List + Detail
     <paper-drawer-panel id="navDrawerPanel" responsive-width="1280px">
 
       <div class="nav" drawer>
-        <!-- Nav Content -->
+       <paper-toolbar>
+
+       </paper-toolbar>
+        <paper-menu selected="0">
+          <paper-item><iron-icon icon="settings"></iron-icon> Item 1</paper-item>
+          <paper-item>Item 2</paper-item>
+        </paper-menu>
       </div>
 
       <paper-drawer-panel id="mainDrawerPanel" class="main-drawer-panel" main responsive-width="600px"
