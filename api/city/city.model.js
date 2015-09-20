@@ -1,11 +1,11 @@
-su/**
- * Created by sasha on 17.09.15.
+/**
+ * Created by sasha on 18.09.15.
  */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // create a schema
-var userSchema = new Schema({
+var citySchema = new Schema({
     _id:Number,
     name: {
         type:String,
@@ -17,13 +17,13 @@ var userSchema = new Schema({
         latitude:Number,
         longitude:Number
     },
-    imageUrl:String,
+    imageUrl:String
 
 });
 
 // the schema is useless so far
 // we need to create a model using it
-var User = mongoose.model('City', userSchema);
+var City = mongoose.model('City', citySchema);
 
 // make this available to our users in our Node applications
 module.exports = City;

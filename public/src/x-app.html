@@ -28,7 +28,7 @@ Left Nav + List + Detail
 
   <template>
 
-    <paper-drawer-panel id="navDrawerPanel" responsive-width="1280px">
+    <paper-drawer-panel id="navDrawerPanel" responsive-width="1280px" forceNarrow="false" >
 
       <div class="nav" drawer>
        <paper-toolbar>
@@ -52,8 +52,8 @@ Left Nav + List + Detail
           </paper-toolbar>
 
           <!-- List -->
-          <paper-menu class="lis" on-iron-activate="_listTap">
-            <cities-list></cities-list>
+          <paper-menu class="list" on-iron-activate="_listTap">
+            <cities-list id="cardlist"></cities-list>
           </paper-menu>
 
         </paper-header-panel>
@@ -66,9 +66,7 @@ Left Nav + List + Detail
           </paper-toolbar>
 
           <!-- Main Content -->
-          <div >
-            <google-map class="google-map" id="map" latitude="49.174955" longitude="31.275796" zoom="6"></google-map>
-          </div>
+          <google-map class="google-map" id="map" latitude="49.174955" longitude="31.275796" zoom="6"></google-map>
 
         </paper-header-panel>
 
@@ -86,15 +84,15 @@ Left Nav + List + Detail
 
       _computeListWidth: function(isMobile) {
         // when in mobile screen size, make the list be 100% width to cover the whole screen
-        return isMobile ? '100%' : '33%';
+        return isMobile ? '100%' : '30%';
       },
 
       _listTap: function() {
         this.$.mainDrawerPanel.closeDrawer();
       },
       ready:function(){
-        var list = document.querySelector('cities-list');
-        var map = document.querySelector('google-map');
+        var list = this.$.cardlist;// document.querySelector('cities-list');
+        var map =this.$.map// document.querySelector('google-map');
         list.addEventListener('onItemClickListener', function (e) {
           console.log(e.detail.itemId); // true
 
@@ -105,8 +103,8 @@ Left Nav + List + Detail
           var markerBuffer = document.createDocumentFragment();
           res.detail.data.forEach(function(city){
             marker = document.createElement('google-map-marker');
-            marker.latitude = city.latitude;
-            marker.longitude =city.longitude;
+            marker.latitude = city.location.latitude;
+            marker.longitude =city.location.longitude;
             marker.title=city.city;
             markerBuffer.appendChild(marker);
           })

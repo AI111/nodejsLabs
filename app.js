@@ -4,20 +4,17 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cities = require('./api/city/index');
 var mongoose = require('mongoose');
-var config = require('./config/environment');
+var users = require('./api/user/index');
 
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
-mongoose.connect(config.mongo.uri, config.mongo.options);
+mongoose.connect('mongodb://localhost/nodejs-lab2');
 mongoose.connection.on('error', function(err) {
       console.error('MongoDB connection error: ' + err);
       process.exit(-1);
     }
 );
-
+require('./api/city/test.data');
 var app = express();
 
 // view engine setup
@@ -32,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+app.use('/cities',cities);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
@@ -62,7 +59,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
-    error: {}
+    error: { }
   });
 });
 

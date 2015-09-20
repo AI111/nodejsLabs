@@ -33,6 +33,7 @@ paper-toolbar {
 
 .list {
   padding: 0;
+  height: 1000px;
 }
 
 .list paper-item {

@@ -1,31 +1,40 @@
 <link rel="import"
       href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-styles/color.html">
 
+<link rel="stylesheet" href="../bower_components/paper-styles/demo.css">
 <link rel="stylesheet" type="text/css" href="list.css" />
 <dom-module id="cities-list">
-    <template>
-        <iron-ajax  url="http://192.168.0.100:3000/users"
-                    last-response="{{data}}"
-                    auto on-response="handleResponse"></iron-ajax>
-        <iron-list class="list" items="[[data]]" as="item">
-            <template>
-                <paper-item >
-
-                    <paper-item-body class="flex" on-click="specialTap" id="{{index}}" two-line>
-                        <div><span>[[item.city]]</span></div>
-                        <div secondary>population: <span>[[item.population]]</span></div>
-                    </paper-item-body>
-                    <paper-icon-button icon="delete" on-click = ""></paper-icon-button>
-                </paper-item>
 
 
-            </template>
-        </iron-list>
+<template>
+    <iron-ajax  url="http://192.168.0.100:3000/cities"
+    last-response="{{data}}"
+    auto on-response="handleResponse"></iron-ajax>
+    <div id="cards" class="list">
+    <template is="dom-repeat" items="{{data}}">
+
+        <paper-card on-click="specialTap" id="{{index}}" heading="{{item.name}}" class="pink"
+                    image="{{item.imageUrl}}">
+            <div class="card-content">
+                Lorem ipsum dolor sit amet, nec ad conceptam interpretaris, mea ne solet repudiandae. Laudem nostrud ei vim. Sapientem consequuntur usu ad, vel etiam philosophia ex, ad quidam option quo. Sed sale integre pericula ei, rebum adipiscing ius ea.
+            </div>
+            <div class="card-actions">
+                <paper-icon-button icon="favorite"></paper-icon-button>
+                <paper-icon-button icon="bookmark"></paper-icon-button>
+                <paper-icon-button on-click="deleteCity" icon="delete"></paper-icon-button>
+            </div>
+        </paper-card>
+
     </template>
+    </div>
+</template>
+
     <script>
         Polymer({
             is: 'cities-list',
@@ -49,7 +58,8 @@
                 this.fire('onItemClickListener', {itemId: e.model.index});
 
             },
-            deleteCity:function(e){
+            deleteCity:function(){
+                console.log("delete"); // selected iron-list row index
 
             }
         });
