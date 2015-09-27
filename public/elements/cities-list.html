@@ -6,45 +6,89 @@
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-styles/color.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
 
 <link rel="stylesheet" href="../bower_components/paper-styles/demo.css">
-<link rel="stylesheet" type="text/css" href="list.css" />
+<!--<link rel="stylesheet" type="css" href="cities-list.css" />-->
 <dom-module id="cities-list">
 
+    <style>
+        body {
+            /*background-color: var(--paper-grey-50);*/
+        }
+        #cards {
+            @apply(--layout-vertical);
+            @apply(--center-justified);
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        paper-card {
+            /*width: 100%;*/
+            margin: 8px;
+            --paper-card-header-image:{
+                /*height: 100%;*/
+                /*width: auto;*/
+                position: relative;
+                overflow: hidden;
+            }
+            /*margin-bottom: 16px;*/
+            /*margin-right: 8px;*/
+            /*margin-left:8px;*/
+        }
 
-<template>
-    <iron-ajax  url="http://192.168.0.100:3000/cities"
-    last-response="{{data}}"
-    auto on-response="handleResponse"></iron-ajax>
-    <div id="cards" class="list">
-    <template is="dom-repeat" items="{{data}}">
+        .fancy .title {
+            position: absolute;
+            top: 30px;
+            left: 100px;
+            color: var(--paper-indigo-500);
+        }
+        .fancy img {
+            width: 100%;
+        }
+        .fancy .big {
+            font-size: 22px;
+            padding: 8px 0 16px;
+            color: var(--google-grey-500);
+        }
+        .fancy .medium {
+            font-size: 16px;
+            padding-bottom: 8px;
+        }
+        .pink {
+            --paper-card-header-color: #ff1744;
+        }
 
-        <paper-card on-click="specialTap" id="{{index}}" heading="{{item.name}}" class="fancy"
-                    image="{{item.imageUrl}}">
-            <div class="card-content">
-                Lorem ipsum dolor sit amet, nec ad conceptam interpretaris, mea ne solet repudiandae. Laudem nostrud ei vim. Sapientem consequuntur usu ad, vel etiam philosophia ex, ad quidam option quo. Sed sale integre pericula ei, rebum adipiscing ius ea.
-            </div>
-            <div class="card-actions">
-                <paper-icon-button icon="favorite"></paper-icon-button>
-                <paper-icon-button icon="bookmark"></paper-icon-button>
-                <paper-icon-button on-click="deleteCity" icon="delete"></paper-icon-button>
-            </div>
-        </paper-card>
+    </style>
+    <template>
+        <iron-ajax  url="http://192.168.0.100:3000/cities"
+                    last-response="{{data}}"
+                    auto on-response="handleResponse"></iron-ajax>
+        <div id="cards">
+            <template is="dom-repeat" items="{{data}}">
 
+                <paper-card on-click="specialTap" id="{{index}}" heading="{{item.name}}" class="pink" image="{{item.imageUrl}}">
+                    <div class="card-content">
+                        Lorem ipsum dolor sit amet, nec ad conceptam interpretaris, mea ne solet repudiandae. Laudem nostrud ei vim. Sapientem consequuntur usu ad, vel etiam philosophia ex, ad quidam option quo. Sed sale integre pericula ei, rebum adipiscing ius ea.
+                    </div>
+                    <div class="card-actions">
+                        <paper-icon-button icon="favorite"></paper-icon-button>
+                        <paper-icon-button icon="bookmark"></paper-icon-button>
+                        <paper-icon-button on-click="deleteCity" icon="delete"></paper-icon-button>
+                    </div>
+                </paper-card>
+
+            </template>
+        </div>
     </template>
-    </div>
-</template>
 
     <script>
         Polymer({
             is: 'cities-list',
-//            properties: {
-//                data: Array
-//            },
-//            listeners: {
-//                'tap': 'regularTap',
-//                'special.tap': 'specialTap'
-//            },
+
+            created: function() {
+                console.log(this.localName + '#' + this.id + ' was created');
+            },
             handleResponse:function(res){
                 this.fire('onDataResponse', {data: this.data});
             },
@@ -58,8 +102,24 @@
                 this.fire('onItemClickListener', {itemId: e.model.index});
 
             },
-            deleteCity:function(){
+            deleteCity:function(e){
                 console.log("delete"); // selected iron-list row index
+                var xhr = new XMLHttpRequest();
+                xhr.open('DELETE', 'http://192.168.0.100:3000/cities/'+this.data[e.model.index]._id, true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr.onload = function () {
+                    // do something to response
+                    console.log(this.responseText);
+                    //this.data.splice(e.model.index,1);
+                    //s =e.model.index;
+                    var p = document.getElementById("cards");
+                    var c =document.getElementById(e.model.index);
+                    p.removeChild(c);
+                    console.log( this.data);
+
+                };
+                xhr.send();
+
 
             }
         });

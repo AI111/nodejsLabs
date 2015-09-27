@@ -14,9 +14,8 @@ router.get('/:id',function(req,res){
         controller.getById(req,res)
     }
 
-
 });
 router.post('/',controller.create)
 router.put('/:id',controller.update);
-router.delete('/',controller.destroy);
+router.delete('/:id',controller.destroy);
 module.exports = router;

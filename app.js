@@ -15,6 +15,7 @@ mongoose.connection.on('error', function(err) {
     }
 );
 require('./api/city/test.data');
+require('./api/user/test.data');
 var app = express();
 
 // view engine setup

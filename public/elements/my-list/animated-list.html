@@ -1,0 +1,49 @@
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+
+    <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+    <link rel="import" href="../../bower_components/neon-animation/neon-animated-pages.html">
+    <link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
+    <link rel="import" href="card-list.html">
+    <link rel="import" href="full-page.html">
+</head>
+<body class="fullbleed">
+
+<template is="dom-bind">
+
+    <neon-animated-pages id="pages" selected="0">
+
+        <card-list on-tile-click="_onTileClick"></card-list>
+
+        <full-page id="fullsize-card" hero-id="hero" on-click="_onFullsizeClick">
+        </full-page>
+
+    </neon-animated-pages>
+
+</template>
+
+<script>
+Polymer({
+    is:''
+})
+//    var scope = document.querySelector('template[is="dom-bind"]');
+//
+//    scope._onTileClick = function(event) {
+//        this.$['fullsize-card'].color = event.detail.data.color;
+//        this.$.pages.selected = 1;
+//    };
+//
+//    scope._onFullsizeClick = function(event) {
+//        this.$.pages.selected = 0;
+//    };
+
+</script>
+
+</body>
+</html>

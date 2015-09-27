@@ -1,0 +1,170 @@
+<link rel="import"
+      href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-styles/color.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+
+
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-shared-element-animatable-behavior.html">
+
+
+<link rel="stylesheet" href="../../bower_components/paper-styles/demo.css">
+<!--<link rel="stylesheet" type="css" href="cities-list.css" />-->
+<dom-module id="card-list">
+
+<style>
+    body {
+        background-color: var(--paper-grey-50);
+    }
+    #cards {
+        @apply(--layout-vertical);
+        @apply(--center-justified);
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    paper-card {
+        /*width: 100%;*/
+        margin: 8px;
+        --paper-card-header-image:{
+            /*height: 100%;*/
+            /*width: auto;*/
+            position: relative;
+            overflow: hidden;
+        }
+        /*margin-bottom: 16px;*/
+        /*margin-right: 8px;*/
+        /*margin-left:8px;*/
+    }
+
+    .fancy .title {
+        position: absolute;
+        top: 30px;
+        left: 100px;
+        color: var(--paper-indigo-500);
+    }
+    .fancy img {
+        width: 100%;
+    }
+    .fancy .big {
+        font-size: 22px;
+        padding: 8px 0 16px;
+        color: var(--google-grey-500);
+    }
+    .fancy .medium {
+        font-size: 16px;
+        padding-bottom: 8px;
+    }
+    .pink {
+        --paper-card-header-color: #ff1744;
+    }
+
+</style>
+<template>
+    <iron-ajax  url="http://192.168.0.100:3000/cities"
+    last-response="{{data}}"
+    auto on-response="handleResponse"></iron-ajax>
+    <div id="cards">
+    <template is="dom-repeat" items="{{data}}">
+        <!--<div>-->
+            <!--<iron-image class="sized" id   src="[[item.imageUrl]]"></iron-image>-->
+            <!--<<div class="card-content">-->
+            <!--Lorem ipsum dolor sit amet, nec ad conceptam interpretaris, mea ne solet repudiandae. Laudem nostrud ei vim. Sapientem consequuntur usu ad, vel etiam philosophia ex, ad quidam option quo. Sed sale integre pericula ei, rebum adipiscing ius ea.-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <paper-card  id="{{index}}" heading="{{item.name}}" class="pink"
+                    image="{{item.imageUrl}}">
+            <div class="card-content">
+                Lorem ipsum dolor sit amet, nec ad conceptam interpretaris, mea ne solet repudiandae. Laudem nostrud ei vim. Sapientem consequuntur usu ad, vel etiam philosophia ex, ad quidam option quo. Sed sale integre pericula ei, rebum adipiscing ius ea.
+            </div>
+            <div class="card-actions">
+                <paper-icon-button icon="favorite"></paper-icon-button>
+                <paper-icon-button icon="bookmark"></paper-icon-button>
+                <paper-icon-button on-click="deleteCity" icon="delete"></paper-icon-button>
+            </div>
+        </paper-card>
+
+    </template>
+    </div>
+</template>
+
+    <script>
+        Polymer({
+            is: 'card-list',
+            behaviors: [
+                Polymer.NeonSharedElementAnimatableBehavior
+            ],
+            properties: {
+
+                animationConfig: {
+                    type: Object,
+                    value: function() {
+                        return {
+                            'exit': [
+//                                {
+//                                name: 'ripple-animation',
+//                                id: 'ripple',
+//                                fromPage: this
+//                            },
+                                {
+                                name: 'hero-animation',
+                                id: 'hero',
+                                fromPage: this
+                            }]
+                        }
+                    }
+                }
+
+            },
+            listeners: {
+                click: '_onClick'
+            },
+            _onClick:function(event){
+                console.log(event);
+                var target = event.target;
+//                while (target !== this && !target._templateInstance) {
+//                    target = target.parentNode;
+//                }
+                var img = target.childNodes[1];
+                // configure the page animation
+                console.log(img);
+                this.sharedElements = {
+                    'hero': img
+                    //,'ripple':target.childNodes[1]
+                };
+//                this.animationConfig['exit'][0].gesture = {
+//                    x: event.x || event.pageX,
+//                    y: event.y || event.pageY
+//                };
+
+                this.fire('tile-click', {
+                    event: event,
+                    img: img
+                });
+            },
+            handleResponse:function(res){
+                this.fire('onDataResponse', {data: this.data});
+            },
+            regularTap: function(e) {
+                alert("Thank you for tapping");
+            },
+
+            specialTap: function(e,b,c) {
+                console.log(e.target.id); // selected iron-list row index
+                console.log ("Selected index is " + e.model.index);
+                this.fire('onItemClickListener', {itemId: e.model.index});
+
+            },
+            deleteCity:function(){
+                console.log("delete"); // selected iron-list row index
+
+            }
+        });
+    </script>
+</dom-module>

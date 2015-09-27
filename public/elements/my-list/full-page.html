@@ -1,0 +1,153 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-shared-element-animatable-behavior.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+
+<dom-module id="full-page">
+
+    <!--<link rel="import" type="css" href="../../shared.css">-->
+
+    <style>
+
+        :host {
+            display: block;
+        }
+
+        .fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            /*background-color:#FEFEFE;*/
+        }
+
+        .card {
+            position: relative;
+            margin: 200px 100px 0;
+            /*height: 700px;*/
+        }
+
+        .container-img {
+            @apply(--layout-horizontal);
+            @apply(--layout-center-justified);
+            position: relative;
+            height: auto;
+        }
+        .container-text {
+            @apply(--layout-horizontal);
+            @apply(--layout-center-justified);
+            position: relative;
+            margin: 20px;
+        }
+        .vertical-horizontal{
+            @apply(‑‑layout-verical);
+        }
+        .flexchild {
+            @apply(--layout-flex);
+        }
+
+
+    </style>
+
+    <template>
+
+        <div id="fixed" class="fixed vertical-container">
+
+            <div id="card" class="container-img">
+                <img src="[[url]]" class="flexchild"/>
+
+            </div>
+            <div class="container-text">
+                <p class="container">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean semper sagittis quam a pharetra. Aliquam mattis ipsum justo, eget porta dui laoreet vel. Fusce id mauris quis lacus scelerisque convallis non id felis. Duis quis ex sed diam vestibulum auctor. Suspendisse vitae neque eleifend, convallis lacus at, ultrices urna. Etiam ornare libero eget tortor consequat dapibus. Curabitur quis gravida sem. Donec rhoncus varius dolor at aliquam. Pellentesque lacinia nisi rhoncus elit tincidunt, accumsan tempus ex suscipit. Aenean imperdiet sapien neque, vestibulum accumsan justo pharetra at. Nullam accumsan ex quis urna congue, sed sagittis sapien porttitor. Vivamus iaculis leo vel placerat dignissim. Morbi quis nisi porta, facilisis velit eu, maximus erat. Nam mattis, mauris sit amet pellentesque tincidunt, nunc ex dignissim lacus, id iaculis massa arcu vel augue. Nullam eget quam eu risus porttitor dictum at et sapien.
+                </p>
+            </div>
+        </div>
+
+    </template>
+
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'full-page',
+
+        behaviors: [
+            Polymer.NeonSharedElementAnimatableBehavior
+        ],
+
+        properties: {
+
+            url: {
+                type: String
+            },
+
+            sharedElements: {
+                type: Object,
+                value: function() {
+                    return {
+                        'hero': this.$.card
+//                        'ripple': this.$.fixed
+                    }
+                }
+            },
+
+            animationConfig: {
+                type: Object,
+                value: function() {
+                    return {
+                        'entry': [
+//                            {
+//                            name: 'ripple-animation',
+//                            id: 'ripple',
+//                            toPage: this,
+//                        },
+                            {
+                                name: 'hero-animation',
+                                id: 'hero',
+                                toPage: this,
+                                timing: {
+                                    delay: 200
+                                }
+                            }]
+                        ,
+                        'exit': [
+//                            {
+//                            name: 'fade-out-animation',
+//                            node: this.$.fixed
+//                            },
+                            {
+                                name: 'transform-animation',
+                                transformFrom: 'none',
+                                transformTo: 'translate(0px,-200vh) scale(0.9,1)',
+                                node: this.$.card
+                            }]
+                    }
+                }
+            }
+
+        },
+        _getImg:function(){
+
+        },
+        _computeCardClass: function(color) {
+            var cls = 'card';
+            if (color) {
+                cls += ' ' + color + '-300';
+            }
+            return cls;
+        },
+
+        _computeFixedBackgroundClass: function(color) {
+            var cls = 'fixed';
+            if (color) {
+                cls += ' ' + color + '-100';
+            }
+            return cls;
+        }
+
+    });
+
+</script>

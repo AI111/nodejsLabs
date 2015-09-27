@@ -17,6 +17,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../bower_components/google-map/google-map.html">
+<link rel="import" href="../bower_components/google-map/google-map.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animated-pages.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animations.html">
+<link rel="import" href="../elements/cities-list.html">
+
 <!--
 
 Left Nav + List + Detail
@@ -53,6 +58,19 @@ Left Nav + List + Detail
 
           <!-- List -->
           <paper-menu class="list" on-iron-activate="_listTap">
+
+            <!--<template is="dom-bind">-->
+
+              <!--<neon-animated-pages id="pages" selected="0">-->
+
+                <!--<animated-grid on-tile-click="_onTileClick"></animated-grid>-->
+
+                <!--<fullsize-page-with-card id="fullsize-card" hero-id="hero" on-click="_onFullsizeClick">-->
+                <!--</fullsize-page-with-card>-->
+
+              <!--</neon-animated-pages>-->
+
+            <!--</template>-->
             <cities-list id="cardlist"></cities-list>
           </paper-menu>
 

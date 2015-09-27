@@ -20,9 +20,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="src/x-app.html">
-  <link rel="import" href="elements/cities-list.html">
+  <link rel="import" href="elements/my-list/card-list.html">
+  <link rel="import" href="elements/my-list/full-page.html">
 
-
+    <link rel="import" href="bower_components/neon-animation/neon-animated-pages.html">
+    <link rel="import" href="bower_components/neon-animation/neon-animations.html">
   <style>
 
     iron-list {
@@ -68,8 +70,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 </head>
 <body>
-  <!--<cities-list></cities-list>-->
-  <x-app></x-app>
+<!--<template is="dom-bind">-->
 
+    <!--<neon-animated-pages id="pages" selected="0">-->
+        <!--<card-list on-tile-click="_onTileClick"></card-list>-->
+        <!--&lt;!&ndash;<animated-grid on-tile-click="_onTileClick"></animated-grid>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<fullsize-page-with-card id="fullsize-card" hero-id="hero" on-click="_onFullsizeClick">&ndash;&gt;-->
+        <!--&lt;!&ndash;</fullsize-page-with-card>&ndash;&gt;-->
+        <!--<full-page id="fullsize-card" on-click="_onFullsizeClick"></full-page>-->
+
+    <!--</neon-animated-pages>-->
+
+<!--</template>-->
+
+  <x-app></x-app>
+    <!--<cards-list></cards-list>-->
+<!--<script>-->
+
+    <!--var scope = document.querySelector('template[is="dom-bind"]');-->
+
+    <!--scope._onTileClick = function(event) {-->
+        <!--console.log(event.detail.img.src)-->
+        <!--this.$['fullsize-card'].url = event.detail.img.src;-->
+        <!--this.$.pages.selected = 1;-->
+    <!--};-->
+
+    <!--scope._onFullsizeClick = function(event) {-->
+        <!--this.$.pages.selected = 0;-->
+    <!--};-->
+
+<!--</script>-->
 </body>
 </html>
